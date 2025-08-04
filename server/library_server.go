@@ -103,15 +103,14 @@ func (s *LibraryServer) ListAllBooks(_ *emptypb.Empty, stream pb.LibraryService_
 }
 func (s *LibraryServer) UploadBooks(stream pb.LibraryService_UploadBooksServer) error {
 	count := 0
-	for {
-		bookReq, err := stream.Recv()
-		if err == io.EOF {
-			// All books received, send summary
-			return stream.SendAndClose(&pb.UploadSummary{
+	for { //sonsuz loop kitablarin gelmeyini temin edir
+		bookReq, err := stream.Recv() //1 AddBookRequest gelir bolck olur sora tezeden burdan basdiyir
+		if err == io.EOF {            //Client streami dayandirib gondermek qurtarib
+			return stream.SendAndClose(&pb.UploadSummary{ //Geriye upload olan kitablarin sayni qaytarir sorada sterami dayanidir rpc qutarir
 				Count: int32(count),
 			})
 		}
-		if err != nil {
+		if err != nil { //Basqa case errorlar ola biler meselen client disconnect olub
 			return err
 		}
 
