@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package library;
+import "google/protobuf/empty.proto";
+option go_package = "github.com/TAhirr01/grpc-library/pb;pb";
+
+
+service LibraryService {
+  rpc RegisterUser(RegisterUserRequest) returns (UserResponse);
+  rpc AddBook(AddBookRequest) returns (BookResponse);
+  rpc BorrowBook(BorrowBookRequest) returns (BorrowResponse);
+  rpc ReturnBook(BorrowBookRequest) returns (BorrowResponse);
+  rpc ListUserBooks(UserID) returns (BookListResponse);
+  rpc ListAllBooks(google.protobuf.Empty) returns (stream BookResponse);
+  rpc UploadBooks(stream AddBookRequest) returns (UploadSummary);
+}
+
+message RegisterUserRequest{
+  string name = 1;
+  string email = 2;
+}
+
+message AddBookRequest {
+  string title = 1;
+  string author = 2;
+}
+
+message BorrowBookRequest {
+  int32 user_id = 1;
+  int32 book_id = 2;
+}
+
+message UserID {
+  int32 user_id = 1;
+}
+
+message UserResponse {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message BookResponse {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+}
+
+message BorrowResponse {
+  string message = 1;
+}
+
+message BookListResponse {
+  repeated BookResponse books = 1;
+}
+
+message UploadSummary {
+  int32 count = 1;
+}
