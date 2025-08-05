@@ -17,7 +17,7 @@ func init() {
 
 func main() {
 	db := initializers.DB
-	lis, err := net.Listen("tcp", ":50051")
+	lis, err := net.Listen("tcp", ":50055")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -27,7 +27,7 @@ func main() {
 	userService := server.NewUserService(userRepository)
 	// Register your service
 	pb.RegisterUserServiceServer(grpcServer, userService)
-	log.Println("gRPC Book server running on :50051")
+	log.Println("gRPC User server running on :50055")
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
