@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "github.com/TAhirr01/grpc-library/pb;pb";
+import "google/protobuf/empty.proto";
+
+
+service UserService{
+  rpc RegisterUser(RegisterUserRequest) returns (UserResponse);
+  rpc GetAllUsers(google.protobuf.Empty) returns (stream UserResponse);
+  rpc GetUserById(UserID) returns (UserResponse);
+}
+
+message RegisterUserRequest{
+  string name = 1;
+  string email = 2;
+}
+
+message UserResponse {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message UserID {
+  int32 user_id = 1;
+}

@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package library;
+
+option go_package = "github.com/TAhirr01/grpc-library/pb;pb";
+
+service AuthService{
+  rpc RegisterUser(RegisterUserRequest) returns (UserResponse);
+  rpc LoginUser (LoginRequest) returns (LoginResponse);
+  rpc ValidateToken (ValidateRequest) returns (UserData);
+}
+
+
+message RegisterUserRequest{
+  string name=1;
+  string email=2;
+  string password=3;
+}
+
+message ValidateRequest {
+  string token = 1;
+}
+
+message UserData {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message UserResponse{
+  int32 id=1;
+  string name=2;
+  string email=3;
+}
+
+message LoginRequest{
+  string email=1;
+  string password=2;
+}
+
+message LoginResponse{
+  string token=1;
+}
+

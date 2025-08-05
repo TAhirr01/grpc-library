@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package library;
+import "google/protobuf/empty.proto";
+option go_package = "github.com/TAhirr01/grpc-library/pb;pb";
+
+service BookService{
+  rpc AddBook(AddBookRequest) returns (BookResponse);
+  rpc DeleteBook(DeleteBookRequest) returns (google.protobuf.Empty);
+  rpc ListAllBooks(google.protobuf.Empty) returns (stream BookResponse);
+  rpc UploadBooks(stream AddBookRequest) returns (UploadSummary);
+}
+
+message AddBookRequest {
+  string title = 1;
+  string author = 2;
+}
+
+message BookResponse {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+}
+
+message UploadSummary {
+  int32 count = 1;
+}
+
+message DeleteBookRequest{
+  int32 id=1;
+}
